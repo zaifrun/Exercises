@@ -8,11 +8,20 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import org.pondar.exercises.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var binding : ActivityMainBinding
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         val list = ArrayList<Person>()
         val p1 = Person("martin", 43)
@@ -28,13 +37,13 @@ class MainActivity : AppCompatActivity() {
         list.add(p2)
         list.add(p3)
 
-        myNameButton.setOnClickListener {
+        binding.myNameButton.setOnClickListener {
             val toast = Toast.makeText(applicationContext, "Hello, Martin", Toast.LENGTH_LONG)
             toast.show()
         }
 
 
-        button.setOnClickListener {
+        binding.button.setOnClickListener {
             var text = ""
             for (person in list) {
                 Log.d("Person", person.toString())
@@ -53,10 +62,10 @@ class MainActivity : AppCompatActivity() {
             android.R.layout.simple_list_item_checked, list
         )
 
-        mylist.choiceMode = ListView.CHOICE_MODE_SINGLE
+        binding.mylist.choiceMode = ListView.CHOICE_MODE_SINGLE
 
-        mylist.adapter = adapter
-        mylist.setOnItemClickListener { parent, view, position, id ->
+        binding.mylist.adapter = adapter
+        binding.mylist.setOnItemClickListener { parent, view, position, id ->
             Log.d("listview", "itemclicked")
             val person = list[position]
             Toast.makeText(applicationContext, "you clicked : $person", Toast.LENGTH_SHORT).show()
